@@ -1,9 +1,9 @@
-export namespace app {
+export namespace feed {
 	
 	export class Feed {
-	    Title: string;
-	    Description: string;
-	    Link: string;
+	    title: string;
+	    description: string;
+	    link: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new Feed(source);
@@ -11,9 +11,9 @@ export namespace app {
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.Title = source["Title"];
-	        this.Description = source["Description"];
-	        this.Link = source["Link"];
+	        this.title = source["title"];
+	        this.description = source["description"];
+	        this.link = source["link"];
 	    }
 	}
 

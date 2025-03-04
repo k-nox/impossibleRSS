@@ -1,22 +1,14 @@
-package app
+package feed
 
-import (
-	"github.com/mmcdole/gofeed"
-)
-
-type Feed struct {
-	Title       string
-	Description string
-	Link        string
-}
+import "github.com/mmcdole/gofeed"
 
 type Parser struct {
-	parser gofeed.Parser
+	parser *gofeed.Parser
 }
 
 func NewParser() *Parser {
 	return &Parser{
-		parser: *gofeed.NewParser(),
+		parser: gofeed.NewParser(),
 	}
 }
 
