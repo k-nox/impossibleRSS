@@ -26,7 +26,9 @@ export default ts.config(
 	{
 		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
 		ignores: ['eslint.config.js', 'svelte.config.js'],
-
+		rules: {
+			'svelte/no-at-html-tags': 'off',
+		},
 		languageOptions: {
 			parserOptions: {
 				projectService: true,

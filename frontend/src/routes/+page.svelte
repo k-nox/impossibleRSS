@@ -52,7 +52,7 @@
 	<h1>Feeds</h1>
 	<ul>
 		{#each feedUrls as feedUrl, index (index)}
-			<li>{feedUrl}</li>
+			<li><a href="/feed?id={index}">{feedUrl}</a></li>
 		{/each}
 	</ul>
 {/if}

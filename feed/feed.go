@@ -1,9 +1,14 @@
 package feed
 
 type Feed struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Link        string `json:"link"`
+	Title       string  `json:"title"`
+	Description string  `json:"description"`
+	Link        string  `json:"link"`
+	Items       []*Item `json:"items"`
+}
+
+type Item struct {
+	Content string `json:"content"`
 }
 
 type FeedList struct {
@@ -12,7 +17,9 @@ type FeedList struct {
 
 func NewFeedList() *FeedList {
 	return &FeedList{
-		urls: []string{},
+		urls: []string{
+			"https://blog.luxatweb.dev/index.xml",
+		},
 	}
 }
 
