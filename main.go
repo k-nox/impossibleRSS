@@ -13,6 +13,9 @@ import (
 //go:embed all:frontend/build
 var assets embed.FS
 
+//go:embed sqlite/migrations/*
+var dbMigrations embed.FS
+
 func main() {
 	// Create an instance of the app structure
 	app := app.New()

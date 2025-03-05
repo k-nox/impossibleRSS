@@ -1,0 +1,10 @@
+version: "2"
+sql:
+  - engine: "sqlite"
+    queries: "sqlite/queries/"
+    schema: "sqlite/migrations/"
+    gen:
+      go:
+        package: "generated"
+        out: "storage/generated"
+        emit_interface: true
