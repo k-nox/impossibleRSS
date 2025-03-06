@@ -3,7 +3,7 @@ package main
 import (
 	"embed"
 	"impossiblerss/app"
-	"impossiblerss/storage"
+	"impossiblerss/config"
 	"log"
 
 	"github.com/wailsapp/wails/v2"
@@ -14,20 +14,16 @@ import (
 //go:embed all:frontend/build
 var assets embed.FS
 
-//go:embed sqlite/migrations/*
-var dbMigrations embed.FS
-
 func main() {
-	db, err := storage.New(":memory:", false)
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = db.Migrate(dbMigrations)
+	cfg, err := config.ParseConfig()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	app := app.New(db)
+	app, err := app.New(cfg)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Create application with options
 	err = wails.Run(&options.App{

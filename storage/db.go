@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"embed"
 	"fmt"
+	"impossiblerss/config"
 	"impossiblerss/storage/generated"
 
 	_ "modernc.org/sqlite"
@@ -13,7 +14,6 @@ import (
 
 type db struct {
 	conn *sql.DB
-	mock bool
 	generated.Querier
 }
 
@@ -22,13 +22,13 @@ type DB interface {
 	Migrate(embed.FS) error
 }
 
-func New(dsn string, mock bool) (DB, error) {
-	if mock {
+func New(cfg *config.Database) (DB, error) {
+	if cfg.Mock {
 		return &mockDB{
 			mockQuerier: mockQuerier{},
 		}, nil
 	}
-	conn, err := sql.Open("sqlite", dsn)
+	conn, err := sql.Open("sqlite", cfg.DSN)
 	if err != nil {
 		return nil, fmt.Errorf("error opening sqlite db: %w", err)
 	}
