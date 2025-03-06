@@ -39,6 +39,13 @@ export default ts.config(
 		},
 	},
 	{
+		files: ['**/wailsjs/go/models.ts'],
+		rules: {
+			'@typescript-eslint/no-namespace': 'off',
+			'@typescript-eslint/no-explicit-any': 'off',
+		},
+	},
+	{
 		files: ['**/components/ui/**/*.svelte'],
 		rules: {
 			'@typescript-eslint/no-unused-vars': [

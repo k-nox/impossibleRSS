@@ -11,16 +11,7 @@
 
 	import RSS from 'lucide-svelte/icons/rss';
 
-	const feeds = [
-		{
-			title: 'lux@web',
-			url: '#',
-		},
-		{
-			title: 'testing',
-			url: '#',
-		},
-	];
+	let { menuItems } = $props();
 </script>
 
 <Sidebar>
@@ -28,7 +19,7 @@
 		<SidebarGroupLabel>Feeds</SidebarGroupLabel>
 		<SidebarGroupContent>
 			<SidebarMenu>
-				{#each feeds as feed (feed.title)}
+				{#each menuItems as feed (feed.title)}
 					<SidebarMenuItem>
 						<SidebarMenuButton>
 							{#snippet child({ props })}

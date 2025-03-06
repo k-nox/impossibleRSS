@@ -2,57 +2,60 @@
 	import { Button } from '$lib/components/ui/button';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { enhance } from '$app/forms';
-	import type { PageProps } from './$types';
-
-	let { data }: PageProps = $props();
-
-	import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '$lib/components/ui/card';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-	import { Add } from '$lib/wailsjs/go/feed/FeedList';
+	import { AddFeed } from '$lib/wailsjs/go/app/FeedList';
+	import { feedList } from '$lib/feeds.svelte';
+	import {
+		Dialog,
+		DialogContent,
+		DialogDescription,
+		DialogFooter,
+		DialogHeader,
+		DialogTitle,
+		DialogTrigger,
+	} from '$lib/components/ui/dialog';
 
 	let url = $state('');
-	let feedUrls: Array<string> = $state([...data.feedUrls]);
 
 	const addUrl: SubmitFunction = ({ cancel }) => {
 		cancel();
-		feedUrls.push(url);
-		Add(url);
+		AddFeed(url);
 		url = '';
 	};
 </script>
 
-{#snippet addFormCard()}
-	<div class="flex min-h-screen flex-row items-center justify-center">
-		<Card class="w-1/2">
-			<CardHeader>
-				<CardTitle>Add feed</CardTitle>
-			</CardHeader>
-			<form method="POST" use:enhance={addUrl}>
-				<CardContent>
-					<div class="grid w-full items-center gap-4">
-						<div class="flex flex-col space-y-1.5">
-							<Label for="url">URL</Label>
-							<Input bind:value={url} id="url" placeholder="Feed URL" />
-						</div>
+{#snippet addFormDialog()}
+	<Dialog>
+		<DialogTrigger>Add Feed</DialogTrigger>
+		<DialogContent>
+			<DialogHeader>
+				<DialogTitle>Add Feed</DialogTitle>
+				<DialogDescription>Add a new feed here. Click save when you're done.</DialogDescription>
+			</DialogHeader>
+			<form method="dialog" use:enhance={addUrl}>
+				<div class="grid gap-4 py-4">
+					<div class="grid grid-cols-4 items-center gap-4">
+						<Label for="url">URL</Label>
+						<Input bind:value={url} id="url" placeholder="https://example.com/index.xml" />
 					</div>
-				</CardContent>
-				<CardFooter class="flex justify-between">
-					<Button variant="outline" id="cancel-add-url">Cancel</Button>
+				</div>
+				<DialogFooter>
+					<Button variant="outline" id="cancel-add-url" onclick={() => (url = '')}>Cancel</Button>
 					<Button type="submit">Add</Button>
-				</CardFooter>
+				</DialogFooter>
 			</form>
-		</Card>
-	</div>
+		</DialogContent>
+	</Dialog>
 {/snippet}
 
-{#if !feedUrls.length}
-	{@render addFormCard()}
+{#if !feedList.feeds.length}
+	{@render addFormDialog()}
 {:else}
 	<h1>Feeds</h1>
 	<ul>
-		{#each feedUrls as feedUrl, index (index)}
-			<li><a href="/feed?id={index}">{feedUrl}</a></li>
+		{#each feedList.feeds as feed (feed.link)}
+			<li><a href="/feed#{feed.title}">{feed.link}</a></li>
 		{/each}
 	</ul>
 {/if}
