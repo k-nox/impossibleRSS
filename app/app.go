@@ -12,7 +12,7 @@ type App struct {
 }
 
 // NewApp creates a new App application struct
-func New(db *storage.DB) *App {
+func New(db storage.DB) *App {
 	return &App{
 		FeedList: newFeedList(db),
 	}

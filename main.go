@@ -18,7 +18,7 @@ var assets embed.FS
 var dbMigrations embed.FS
 
 func main() {
-	db, err := storage.New(":memory:")
+	db, err := storage.New(":memory:", false)
 	if err != nil {
 		log.Fatal(err)
 	}

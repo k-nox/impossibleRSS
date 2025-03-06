@@ -30,12 +30,12 @@ type Item struct {
 
 type FeedList struct {
 	ctx       context.Context
-	db        *storage.DB
+	db        storage.DB
 	parser    *gofeed.Parser
 	sanitizer *bluemonday.Policy
 }
 
-func newFeedList(db *storage.DB) *FeedList {
+func newFeedList(db storage.DB) *FeedList {
 	return &FeedList{
 		db:        db,
 		parser:    gofeed.NewParser(),
