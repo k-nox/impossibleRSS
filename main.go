@@ -20,23 +20,27 @@ func main() {
 		log.Fatal(err)
 	}
 
-	app, err := app.New(cfg)
+	a, err := app.New(cfg)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Create application with options
 	err = wails.Run(&options.App{
-		Title:  "impossiblerss",
+		Title:  "impossibleRSS",
 		Width:  1024,
 		Height: 768,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
 		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
-		OnStartup:        app.Startup,
+		OnStartup:        a.Startup,
+		OnDomReady:       a.OnDOMReady,
 		Bind: []interface{}{
-			app.FeedList,
+			a.FeedList,
+		},
+		EnumBind: []interface{}{
+			app.Events,
 		},
 	})
 	if err != nil {

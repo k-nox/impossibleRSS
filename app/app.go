@@ -15,7 +15,7 @@ type App struct {
 
 // NewApp creates a new App application struct
 func New(cfg *config.Config) (*App, error) {
-	db, err := storage.New(&cfg.Database)
+	db, err := storage.New(cfg.Database)
 	if err != nil {
 		return nil, err
 	}
@@ -23,8 +23,12 @@ func New(cfg *config.Config) (*App, error) {
 	if err != nil {
 		return nil, err
 	}
+	feedList, err := newFeedList(db, cfg.Feeds)
+	if err != nil {
+		return nil, err
+	}
 	return &App{
-		FeedList: newFeedList(db),
+		FeedList: feedList,
 	}, nil
 }
 
@@ -33,4 +37,8 @@ func New(cfg *config.Config) (*App, error) {
 func (a *App) Startup(ctx context.Context) {
 	a.ctx = ctx
 	a.FeedList.ctx = ctx
+}
+
+func (a *App) OnDOMReady(ctx context.Context) {
+	a.FeedList.setupRefreshers()
 }

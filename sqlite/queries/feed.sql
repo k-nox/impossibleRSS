@@ -1,6 +1,11 @@
 -- name: CreateFeed :exec
 insert into feeds (url, title, description) values (?, ?, ?);
 
+-- name: CreateItem :exec
+insert into items (
+    guid, title, authors, content, description, published_date, feed_url
+) values (?, ?, ?, ?, ?, ?, ?);
+
 -- name: GetFeeds :many
 select
     url,
@@ -19,8 +24,3 @@ select
     published_date
 from items
 where feed_url = ?;
-
--- name: CreateItem :exec
-insert into items (
-    guid, title, authors, content, description, published_date, feed_url
-) values (?, ?, ?, ?, ?, ?, ?)

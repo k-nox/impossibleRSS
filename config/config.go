@@ -7,12 +7,17 @@ import (
 )
 
 type Config struct {
-	Database `yaml:"database"`
+	Database *Database `yaml:"database"`
+	Feeds    *Feeds    `yaml:"feedList"`
 }
 
 type Database struct {
 	DSN  string `yaml:"dsn"`
 	Mock bool   `yaml:"mock"`
+}
+
+type Feeds struct {
+	RefreshRate int64 `yaml:"refreshRateSec" env:"IMPOSSIBLERSS_REFRESH_RATE_SEC" env-default:"3600"`
 }
 
 func ParseConfig() (*Config, error) {
