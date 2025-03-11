@@ -8,6 +8,10 @@
 		$props();
 
 	let url = $state('');
+	const onClick = () => {
+		addNewFeed(url);
+		isOpen = false;
+	};
 </script>
 
 <Dialog.Root bind:open={isOpen}>
@@ -22,7 +26,7 @@
 			<Input id="url" bind:value={url} placeholder="https://example.com/index.xml" />
 		</div>
 		<Dialog.Footer>
-			<Button type="button" onclick={() => addNewFeed(url)}>Save</Button>
+			<Button type="button" onclick={onClick}>Save</Button>
 		</Dialog.Footer>
 	</Dialog.Content>
 </Dialog.Root>
