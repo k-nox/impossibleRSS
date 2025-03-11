@@ -3,7 +3,7 @@
 	import * as Collapsible from '$lib/components/ui/collapsible';
 	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 	import Plus from 'lucide-svelte/icons/plus';
-	import GalleryVerticalEnd from 'lucide-svelte/icons/gallery-vertical-end';
+	import Rss from 'lucide-svelte/icons/rss';
 	import type { ComponentProps } from 'svelte';
 	import NewFeedDialog from './new-feed-dialog.svelte';
 
@@ -30,11 +30,10 @@
 							<div
 								class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"
 							>
-								<GalleryVerticalEnd class="size-4" />
+								<Rss />
 							</div>
 							<div class="flex flex-col gap-0.5 leading-none">
-								<span class="font-semibold">Documentation</span>
-								<span class="">v1.0.0</span>
+								<span class="font-semibold">impossibleRSS</span>
 							</div>
 						</a>
 					{/snippet}

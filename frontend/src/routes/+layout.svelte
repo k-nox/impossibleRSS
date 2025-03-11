@@ -49,7 +49,7 @@
 	};
 </script>
 
-<SidebarPage {feedMenuItems} {addNewFeed}>
+<SidebarPage {feedMenuItems} {addNewFeed} pageTitle={selected?.title}>
 	<main>
 		<div>{@render children?.()}</div>
 	</main>
