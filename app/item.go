@@ -3,9 +3,10 @@ package app
 import (
 	"context"
 	"fmt"
-	"impossiblerss/storage"
-	"impossiblerss/storage/generated"
 	"time"
+
+	"github.com/k-nox/impossiblerss/storage"
+	"github.com/k-nox/impossiblerss/storage/generated"
 )
 
 type Item struct {

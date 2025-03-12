@@ -2,9 +2,10 @@ package main
 
 import (
 	"embed"
-	"impossiblerss/app"
-	"impossiblerss/config"
 	"log"
+
+	"github.com/k-nox/impossiblerss/app"
+	"github.com/k-nox/impossiblerss/config"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"

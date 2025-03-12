@@ -4,8 +4,9 @@ import (
 	"database/sql"
 	"embed"
 	"fmt"
-	"impossiblerss/config"
-	"impossiblerss/storage/generated"
+
+	"github.com/k-nox/impossiblerss/config"
+	"github.com/k-nox/impossiblerss/storage/generated"
 
 	_ "modernc.org/sqlite"
 

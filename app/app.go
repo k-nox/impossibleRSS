@@ -2,9 +2,10 @@ package app
 
 import (
 	"context"
-	"impossiblerss/config"
-	"impossiblerss/sqlite"
-	"impossiblerss/storage"
+
+	"github.com/k-nox/impossiblerss/config"
+	"github.com/k-nox/impossiblerss/sqlite"
+	"github.com/k-nox/impossiblerss/storage"
 )
 
 // App struct

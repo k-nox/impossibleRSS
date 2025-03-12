@@ -1,4 +1,4 @@
-module impossiblerss
+module github.com/k-nox/impossiblerss
 
 go 1.23
 

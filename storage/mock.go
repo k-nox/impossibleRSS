@@ -4,8 +4,9 @@ import (
 	"context"
 	"embed"
 	"errors"
-	"impossiblerss/storage/generated"
 	"slices"
+
+	"github.com/k-nox/impossiblerss/storage/generated"
 
 	"modernc.org/sqlite"
 	sqlite3 "modernc.org/sqlite/lib"

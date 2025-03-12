@@ -3,11 +3,12 @@ package app
 import (
 	"context"
 	"fmt"
-	"impossiblerss/config"
-	"impossiblerss/storage"
-	"impossiblerss/storage/generated"
 	"sync"
 	"time"
+
+	"github.com/k-nox/impossiblerss/config"
+	"github.com/k-nox/impossiblerss/storage"
+	"github.com/k-nox/impossiblerss/storage/generated"
 
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/mmcdole/gofeed"

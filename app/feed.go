@@ -2,8 +2,9 @@ package app
 
 import (
 	"context"
-	"impossiblerss/storage"
 	"sync"
+
+	"github.com/k-nox/impossiblerss/storage"
 )
 
 type Feed struct {
