@@ -32,7 +32,7 @@ export namespace app {
 	    title: string;
 	    description: string;
 	    link: string;
-	    items: Record<string, Item>;
+	    items: Item[];
 	
 	    static createFrom(source: any = {}) {
 	        return new Feed(source);
@@ -43,7 +43,7 @@ export namespace app {
 	        this.title = source["title"];
 	        this.description = source["description"];
 	        this.link = source["link"];
-	        this.items = this.convertValues(source["items"], Item, true);
+	        this.items = this.convertValues(source["items"], Item);
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {

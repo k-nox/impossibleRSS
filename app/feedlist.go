@@ -51,7 +51,8 @@ func (fl *FeedList) AddFeed(feedURL string) (*Feed, error) {
 		Title:       fetched.Title,
 		Description: fetched.Description,
 		URL:         feedURL,
-		Items:       map[string]Item{},
+		Items:       []*Item{},
+		itemGuids:   map[string]int{},
 		mutex:       &sync.RWMutex{},
 	}
 
@@ -89,7 +90,7 @@ func (fl *FeedList) getFeedsFromDB() ([]*Feed, error) {
 
 	feeds := make([]*Feed, len(feedRows))
 	for idx, row := range feedRows {
-		items, err := fl.getItemsFromDB(row.Url)
+		items, itemGuids, err := fl.getItemsFromDB(row.Url)
 		if err != nil {
 			return nil, err
 		}
@@ -98,21 +99,23 @@ func (fl *FeedList) getFeedsFromDB() ([]*Feed, error) {
 			Description: row.Description.String,
 			URL:         row.Url,
 			Items:       items,
+			itemGuids:   itemGuids,
 			mutex:       &sync.RWMutex{},
 		}
 	}
 	return feeds, nil
 }
 
-func (fl *FeedList) getItemsFromDB(feedURL string) (map[string]Item, error) {
+func (fl *FeedList) getItemsFromDB(feedURL string) ([]*Item, map[string]int, error) {
 	itemRows, err := fl.db.GetItemsForFeed(fl.ctx, feedURL)
 	if err != nil {
-		return nil, fmt.Errorf("error querying for items for feed %s: %w", feedURL, err)
+		return nil, nil, fmt.Errorf("error querying for items for feed %s: %w", feedURL, err)
 	}
 
-	items := make(map[string]Item, len(itemRows))
-	for _, row := range itemRows {
-		items[row.Guid] = Item{
+	itemGuids := make(map[string]int, len(itemRows))
+	items := make([]*Item, len(itemRows))
+	for idx, row := range itemRows {
+		items[idx] = &Item{
 			GUID:  row.Guid,
 			Title: row.Title.String,
 			// Authors: []string,
@@ -121,12 +124,13 @@ func (fl *FeedList) getItemsFromDB(feedURL string) (map[string]Item, error) {
 			PublishedDate: &row.PublishedDate.Time,
 			FeedURL:       feedURL,
 		}
+		itemGuids[row.Guid] = idx
 	}
 
-	return items, nil
+	return items, itemGuids, nil
 }
 
-func (fl *FeedList) transformItem(raw *gofeed.Item, feedURL string) Item {
+func (fl *FeedList) transformItem(raw *gofeed.Item, feedURL string) *Item {
 	content := raw.Content
 	if content == "" {
 		content = raw.Custom["content"]
@@ -137,7 +141,7 @@ func (fl *FeedList) transformItem(raw *gofeed.Item, feedURL string) Item {
 		authors[idx] = author.Name
 	}
 
-	return Item{
+	return &Item{
 		GUID:          raw.GUID,
 		Title:         raw.Title,
 		Authors:       authors,

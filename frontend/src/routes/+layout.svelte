@@ -19,8 +19,7 @@
 
 	$effect(() => {
 		EventsOn(app.Event.NEW_ITEM, (...data: Array<app.Item>) => {
-			const item = data[0];
-			feeds[item.title].items[item.guid] = item;
+			data.forEach((item) => feeds[item.feedURL].items.push(item));
 		});
 		return () => {
 			EventsOff(app.Event.NEW_ITEM);
